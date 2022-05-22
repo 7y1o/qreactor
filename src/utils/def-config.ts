@@ -1,9 +1,7 @@
 /** Default QReactor initialization options */
 const qrDefConfig = {
-  port: 7910,
-  cors: {
-    origin: '*',
-  },
+  port: 4000,
+  cors: false,
 };
 
 export default qrDefConfig;
