@@ -74,12 +74,6 @@ export default class QReactor {
       if (cb) {
         return cb();
       }
-
-      const fmt = Intl.DateTimeFormat('en', {
-        dateStyle: 'short',
-        hour12: false,
-      });
-      // console.log(`🚀 [${fmt.format(Date.now())}] QReactor server started: http://localhost:${this.config.port}/`);
     });
   }
 
