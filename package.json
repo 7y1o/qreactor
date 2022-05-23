@@ -1,6 +1,6 @@
 {
   "name": "@7y1o/qreactor",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "GraphQL router based on Express",
   "author": "7y1o",
   "license": "MIT",
