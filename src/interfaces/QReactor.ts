@@ -42,25 +42,7 @@ export interface IQRInitConfig {
 export interface IQRConfig {
   port: number;
   cors: boolean | IQRInitConfig['cors'];
-  session?: {
-    secret: string | string[];
-    cookie?: {
-      path?: string;
-      maxAge?: number;
-      domain?: string;
-      secure?: boolean;
-      signed?: boolean;
-      encode?: (val: string) => string;
-      httpOnly?: boolean;
-      sameSite?: 'none' | 'lax' | 'strict';
-    };
-    name?: string;
-    genId?: (req: Request) => string;
-    proxy?: boolean;
-    resave?: boolean;
-    rolling?: boolean;
-    saveUninitialized?: boolean;
-  };
+  session?: IQRInitConfig['session'];
 }
 
 /** QReactor Express routes */
