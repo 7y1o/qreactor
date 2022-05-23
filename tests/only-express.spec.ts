@@ -3,14 +3,17 @@ import QReactor, { Controller, Get, Post } from '../src/index';
 import axios from 'axios';
 
 @Controller()
+// @ts-ignore
 class ExampleController {
 
     @Get('/')
+    // @ts-ignore
     hwGet(_: Request, res: Response) {
         res.send('<h1>Hello, World!</h1>')
     }
 
     @Post('/')
+    // @ts-ignore
     hwPost(_: Request, res: Response) {
         res.json({
             message: 'Hello, World!'
