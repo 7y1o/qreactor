@@ -1,5 +1,5 @@
 import express from 'express';
-import cookieParser from 'cookie-parser';
+import session from 'express-session';
 import cors from 'cors';
 import qrDefConfig from './utils/def-config';
 import { graphqlHTTP } from 'express-graphql';
@@ -24,7 +24,7 @@ export default class QReactor {
     this.config = Object.assign({}, qrDefConfig, options ?? {});
 
     // Setup cookie middleware
-    this.server.use(cookieParser(this.config.cookieSecret));
+    this.server.use(session(this.config.session as session.SessionOptions));
 
     // Setup CORS
     this.server.use(cors(this.config.cors as CorsOptions));
