@@ -22,7 +22,9 @@ class ExampleController {
 }
 
 describe('Test server Express routes', () => {
-    const server = new QReactor();
+    const server = new QReactor({
+        port: 4001
+    });
 
     test('Is routes can initialize', () => {
         expect(new Promise<void>(r => {server.express(ExampleController);r()})).resolves.not.toThrowError();
@@ -33,14 +35,14 @@ describe('Test server Express routes', () => {
     });
 
     test('GET route is accessible', (done) => {
-        axios.get('http://localhost:4000/').then((r) => {
+        axios.get('http://localhost:4001/').then((r) => {
             expect(r.data).toBe('<h1>Hello, World!</h1>');
             done();
         });
     });
 
     test('POST route is accessible', (done) => {
-        axios.post('http://localhost:4000/').then((r) => {
+        axios.post('http://localhost:4001/').then((r) => {
             expect((r.data as {message: string}).message).toBe('Hello, World!');
             done();
         });
