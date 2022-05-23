@@ -1,10 +1,16 @@
 import express from 'express';
+import cookieParser from 'cookie-parser';
+import cors from 'cors';
 import qrDefConfig from './utils/def-config';
+import { graphqlHTTP } from 'express-graphql';
+import { buildSchema } from 'graphql';
+import { readFileSync } from 'fs';
 
 // Types
 import type { Server } from 'http';
+import type { CorsOptions } from 'cors';
 import type { Express, NextFunction, Request, Response } from 'express';
-import type { IQRInitConfig, IQLRoute, IQRConfig, Class, IExpressRoute } from './interfaces/QReactor';
+import type { IQRInitConfig, IQRConfig, Class, IExpressRoute } from './interfaces/QReactor';
 
 /** QReactor common class */
 export default class QReactor {
@@ -16,11 +22,31 @@ export default class QReactor {
     public constructor(options?: IQRInitConfig) {
         this.server = express();
         this.config = Object.assign({}, qrDefConfig, options ?? {});
+
+        // Setup cookie middleware
+        this.server.use(cookieParser(this.config.cookieSecret));
+
+        // Setup CORS
+        this.server.use(cors(this.config.cors as CorsOptions));
     }
 
-    /** Initialize QL */
-    public ql(...qlRoutes: IQLRoute[]): void {
+    /** Register QL controllers */
+    public ql(...controllers: Class[]): void {
         if (this.running) throw new Error('Cannot init GraphQL after server start');
+        controllers.forEach((controller: Class) => {
+            const instance = new controller();
+            const meta = Reflect.getMetadata('ql-info', controller);
+            const resolvers = Reflect.getMetadata('ql-resolvers', controller) as Array<string>;
+
+            const schema = buildSchema(readFileSync(meta.schema).toString());
+            const ql = graphqlHTTP({
+                schema,
+                rootValue: Object.assign({}, ...resolvers.map((name) => ({ [name]: instance[name] }))),
+                graphiql: meta.graphiql
+            });
+
+            this.server.all(meta.path, ql);
+        });
     }
     
     /** Register Express controllers */
@@ -37,6 +63,11 @@ export default class QReactor {
         });
     }
 
+    /** Add middleware */
+    public use(middleware: (req: Request, res: Response, next: NextFunction) => any): void {
+        this.server.use(middleware);
+    }
+
     /** Start the server */
     public start(cb?: () => void): void {
         this.running = this.server.listen(
@@ -50,7 +81,7 @@ export default class QReactor {
                     dateStyle: 'short',
                     hour12: false
                 });
-                console.log(`🚀 [${fmt.format(Date.now())}] QReactor server started: http://localhost:${this.config.port}`);
+                console.log(`🚀 [${fmt.format(Date.now())}] QReactor server started: http://localhost:${this.config.port}/`);
             }
         );
     }

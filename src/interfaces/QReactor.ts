@@ -4,32 +4,26 @@ import { Request, Response } from 'express';
 export interface IQRInitConfig {
   port?: number;
   cors?:
-    | boolean
-    | string
-    | {
-        maxAge?: number;
-        origin?: string | string[] | RegExp;
-        methods?: string[];
-        credentials?: boolean;
-        allowedHeaders?: string[];
-        exposedHeaders?: string[];
-        preflightContinue?: boolean;
-        optionsSuccessStatus?: number;
-      };
+  | boolean
+  | string
+  | {
+    maxAge?: number;
+    origin?: string | string[] | RegExp;
+    methods?: string[];
+    credentials?: boolean;
+    allowedHeaders?: string[];
+    exposedHeaders?: string[];
+    preflightContinue?: boolean;
+    optionsSuccessStatus?: number;
+  };
+  cookieSecret?: string
 }
 
 /** QReactor config */
 export interface IQRConfig {
   port: number,
   cors: boolean | IQRInitConfig['cors'],
-}
-
-/** QReactor GraphQL routes */
-export interface IQLRoute {
-  schema: string;
-  resolvers: {
-    [resolver: string]: (req: Request, res: Response) => any 
-  }
+  cookieSecret?: string
 }
 
 /** QReactor Express routes */
