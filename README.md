@@ -106,3 +106,23 @@ const server = new QReactor({
 server.express(GreetsController);
 server.start();
 ```
+
+## TODO:
+
+### New features:
+- [ ] — Add `@Middleware` decorator for using middlewares
+- [ ] — Add databases support
+- [ ] — Add GraphQL schema generator with decorators
+- [ ] — Add async preinitialize function for other libraries preparation (like mongoose or sqlite)
+- [ ] — Add log for debug and errors
+- [ ] — Make more strong types support
+- [ ] — Add request fields validator
+
+### Bugfixes and similar things:
+- [ ] — Optimize methods
+- [ ] — Add more tests for better library stability
+- [ ] — Fix the types of the GraphiQL field (in @QLController) for its correct operation
+- [ ] — Fix some bugs with queries and mutations
+
+### Other:
+_nothing is here_
