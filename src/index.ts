@@ -10,12 +10,17 @@ import type { IQRInitConfig, IExpressRoute } from './interfaces/QReactor';
 
 // Export
 export {
-    
-    // Classes & methods
-    QReactor as default,
-    Controller, Get, Delete, Options, Post, Put,
-    QLController, QLResolve,
-    
-    // Types
-    IQRInitConfig, IExpressRoute
+  // Classes & methods
+  QReactor as default,
+  Controller,
+  Get,
+  Delete,
+  Options,
+  Post,
+  Put,
+  QLController,
+  QLResolve,
+  // Types
+  IQRInitConfig,
+  IExpressRoute,
 };
