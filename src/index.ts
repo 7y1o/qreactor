@@ -26,5 +26,5 @@ export {
   IExpressRoute,
   IContext,
   Request,
-  Response
+  Response,
 };

@@ -1,5 +1,5 @@
-import type { Request, Response } from "express";
-import { IncomingMessage } from "http";
+import type { Request, Response } from 'express';
+import { IncomingMessage } from 'http';
 
 /** Initialization options */
 export interface IQRInitConfig {
@@ -18,24 +18,24 @@ export interface IQRInitConfig {
         optionsSuccessStatus?: number;
       };
   session?: {
-    secret: string | string[],
+    secret: string | string[];
     cookie?: {
-      path?: string,
-      maxAge?: number,
-      domain?: string,
-      secure?: boolean,
-      signed?: boolean,
-      encode?: (val: string) => string,
-      httpOnly?: boolean,
-      sameSite?: 'none' | 'lax' | 'strict',
-    },
-    name?: string,
-    genId?: (req: Request) => string,
-    proxy?: boolean,
-    resave?: boolean,
-    rolling?: boolean,
-    saveUninitialized?: boolean
-  }
+      path?: string;
+      maxAge?: number;
+      domain?: string;
+      secure?: boolean;
+      signed?: boolean;
+      encode?: (val: string) => string;
+      httpOnly?: boolean;
+      sameSite?: 'none' | 'lax' | 'strict';
+    };
+    name?: string;
+    genId?: (req: Request) => string;
+    proxy?: boolean;
+    resave?: boolean;
+    rolling?: boolean;
+    saveUninitialized?: boolean;
+  };
 }
 
 /** QReactor config */
@@ -43,24 +43,24 @@ export interface IQRConfig {
   port: number;
   cors: boolean | IQRInitConfig['cors'];
   session?: {
-    secret: string | string[],
+    secret: string | string[];
     cookie?: {
-      path?: string,
-      maxAge?: number,
-      domain?: string,
-      secure?: boolean,
-      signed?: boolean,
-      encode?: (val: string) => string,
-      httpOnly?: boolean,
-      sameSite?: 'none' | 'lax' | 'strict',
-    },
-    name?: string,
-    genId?: (req: Request) => string,
-    proxy?: boolean,
-    resave?: boolean,
-    rolling?: boolean,
-    saveUninitialized?: boolean
-  }
+      path?: string;
+      maxAge?: number;
+      domain?: string;
+      secure?: boolean;
+      signed?: boolean;
+      encode?: (val: string) => string;
+      httpOnly?: boolean;
+      sameSite?: 'none' | 'lax' | 'strict';
+    };
+    name?: string;
+    genId?: (req: Request) => string;
+    proxy?: boolean;
+    resave?: boolean;
+    rolling?: boolean;
+    saveUninitialized?: boolean;
+  };
 }
 
 /** QReactor Express routes */
@@ -83,6 +83,6 @@ export type Class = {
 
 /** Context type implementation */
 export interface IContext extends IncomingMessage {
-  req: Request,
-  res: Response
+  req: Request;
+  res: Response;
 }
