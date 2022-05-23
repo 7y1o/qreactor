@@ -6,7 +6,8 @@ import { Controller, Get, Delete, Options, Post, Put } from './decorators/expres
 import { QLController, QLResolve } from './decorators/ql';
 
 // Import types
-import type { IQRInitConfig, IExpressRoute } from './interfaces/QReactor';
+import type { Request, Response } from 'express';
+import type { IQRInitConfig, IExpressRoute, IContext } from './interfaces/QReactor';
 
 // Export
 export {
@@ -23,4 +24,7 @@ export {
   // Types
   IQRInitConfig,
   IExpressRoute,
+  IContext,
+  Request,
+  Response
 };
