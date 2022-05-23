@@ -43,5 +43,8 @@
     "express-session": "^1.17.3",
     "graphql": "^15.3.0",
     "reflect-metadata": "^0.1.13"
+  },
+  "peerDependencies": {
+    "express": "^4.18.1"
   }
 }
