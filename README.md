@@ -41,7 +41,7 @@ import { QLController, QLResolve } from '@7y1o/qreactor';
 class UserController {
 
     @QLResolve
-    searchUser({req}, {name}) {
+    searchUser({name}, {req}) {
         if (!req.cookies['x-access-token']) return {
             error: 'err_no_token'
         };
