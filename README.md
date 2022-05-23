@@ -1,6 +1,8 @@
 # QReactor
 GraphQL server built on top of ExpressJS with support for Cookies, CORS and other useful stuff
 
+[![Common job](https://github.com/7y1o/qreactor/actions/workflows/main.yml/badge.svg)](https://github.com/7y1o/qreactor/actions/workflows/main.yml)
+
 ## What is QReactor?
 QReactor is a library that combines the capabilities of ExpressJS and GraphQL. With the help of decorators, you can configure separate Express controllers and separate ones for GraphQL.
 
