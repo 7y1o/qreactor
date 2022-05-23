@@ -1,8 +1,6 @@
 import QReactor, { QLController, QLResolve } from "../src";
 import axios from 'axios';
 import path from "path";
-import http from 'http';
-import fs from 'fs';
 
 @QLController(path.resolve(process.cwd(), 'tests', 'schema', 'test.gql'), { path: '/', graphiql: true })
 // @ts-ignore
@@ -29,7 +27,8 @@ describe('Test server QL routes', () => {
     });
 
     test('Query is accessible', async () => {
-        const { data } = await axios.get('http://localhost:4002/', {
+        axios.interceptors.response.use(v => v, (err) => console.log(err))
+        const { data: res } = await axios.get('http://localhost:4002/', {
             method: 'get',
             url: 'http://localhost:4002/',
             headers: {
@@ -43,7 +42,7 @@ describe('Test server QL routes', () => {
             })
         });
 
-        expect(data.data.hello).toBe('World!');
+        expect(res.data.hello).toBe('World!');
     });
 
     test('Can stop', () => {
