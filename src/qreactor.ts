@@ -17,17 +17,23 @@ export default class QReactor {
   private server: Express;
   private running?: Server;
   private config: IQRConfig;
+  private prepars: (() => any)[];
 
   /** Initialize */
   public constructor(options?: IQRInitConfig) {
     this.server = express();
     this.config = Object.assign({}, qrDefConfig, options ?? {});
+    this.prepars = [];
 
     // Setup cookie middleware
     this.server.use(session(this.config.session as session.SessionOptions));
 
     // Setup CORS
     this.server.use(cors(this.config.cors as CorsOptions));
+  }
+
+  public async prepare(pf: () => any): Promise<void> {
+    this.prepars.push(pf);
   }
 
   /** Register QL controllers */
@@ -56,7 +62,10 @@ export default class QReactor {
       const prefix = Reflect.getMetadata('prefix', controller);
       const routes: IExpressRoute[] = Reflect.getMetadata('routes', controller);
       routes.forEach((route) => {
-        this.server[route.method](prefix + route.path, (req: Request, res: Response, next: NextFunction) => {
+        if (route.mws.length > 0) this.server[route.method](prefix + route.path, [...route.mws], (req: Request, res: Response, next: NextFunction) => {
+          instance[route.name](req, res, next);
+        });
+        else this.server[route.method](prefix + route.path, (req: Request, res: Response, next: NextFunction) => {
           instance[route.name](req, res, next);
         });
       });
@@ -69,11 +78,10 @@ export default class QReactor {
   }
 
   /** Start the server */
-  public start(cb?: () => void): void {
+  public async start(cb?: () => void): Promise<void> {
+    await Promise.all(this.prepars);
     this.running = this.server.listen(this.config.port, () => {
-      if (cb) {
-        return cb();
-      }
+      if (cb) cb()
     });
   }
 
