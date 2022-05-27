@@ -8,7 +8,7 @@ describe('Test server initialization without any routes', () => {
     });
 
     test('Can start', () => {
-        expect(new Promise<void>(r => {server.start();r()})).resolves.not.toThrowError();
+        expect(new Promise<void>(r => {server.start().then(r)})).resolves.not.toThrowError();
     });
 
     test('Can stop', () => {
