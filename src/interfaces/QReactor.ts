@@ -57,7 +57,7 @@ export interface IExpressRoute {
   method: 'get' | 'post' | 'delete' | 'options' | 'put';
 
   /** Middlewares */
-  mws: ((request: Request, response: Response, next: NextFunction) => any)[]
+  mws: ((request: Request, response: Response, next: NextFunction) => any)[];
 }
 
 /** Fake class type implementation */

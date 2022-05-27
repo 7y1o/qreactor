@@ -62,12 +62,18 @@ export default class QReactor {
       const prefix = Reflect.getMetadata('prefix', controller);
       const routes: IExpressRoute[] = Reflect.getMetadata('routes', controller);
       routes.forEach((route) => {
-        if (route.mws.length > 0) this.server[route.method](prefix + route.path, [...route.mws], (req: Request, res: Response, next: NextFunction) => {
-          instance[route.name](req, res, next);
-        });
-        else this.server[route.method](prefix + route.path, (req: Request, res: Response, next: NextFunction) => {
-          instance[route.name](req, res, next);
-        });
+        if (route.mws.length > 0)
+          this.server[route.method](
+            prefix + route.path,
+            [...route.mws],
+            (req: Request, res: Response, next: NextFunction) => {
+              instance[route.name](req, res, next);
+            },
+          );
+        else
+          this.server[route.method](prefix + route.path, (req: Request, res: Response, next: NextFunction) => {
+            instance[route.name](req, res, next);
+          });
       });
     });
   }
@@ -81,7 +87,7 @@ export default class QReactor {
   public async start(cb?: () => void): Promise<void> {
     await Promise.all(this.prepars);
     this.running = this.server.listen(this.config.port, () => {
-      if (cb) cb()
+      if (cb) cb();
     });
   }
 
