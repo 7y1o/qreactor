@@ -109,6 +109,42 @@ server.express(GreetsController);
 server.start();
 ```
 
+### Middleware example
+
+```typescript
+// controller.ts
+import {Controller, Post, Middleware} from '@7y1o/qreactor';
+
+@Controller()
+class IdentityController {
+
+    @Post('/signin')
+    signIn(req, res) {
+        req.session.name = req.body.name;
+        req.session.save(() => res.send('Hello, ' + req.session.name)); 
+    }
+
+}
+
+export default IdentityController;
+```
+
+```typescript
+// main.ts
+import QReactor from '@7y1o/qreactor';
+import IdentityController from './controller';
+
+const server = new QReactor({
+    session: {
+        secret: 'verysecretcode',
+        name: 'access-token'
+    }
+});
+
+server.express(IdentityController);
+server.start();
+```
+
 ## TODO:
 
 ### New features:
@@ -128,3 +164,11 @@ server.start();
 
 ### Other:
 _nothing is here_
+
+## Ready:
+- [x] — Express server
+- [x] — Express controllers
+- [x] — GralhQL controllers
+- [x] — Middleware decorator for express controller
+
+Full change log you can see on [this page](./CHANGELOG.md)
