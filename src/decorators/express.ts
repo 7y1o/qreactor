@@ -23,6 +23,7 @@ export const Get = (path: string): MethodDecorator => {
       method: 'get',
       path,
       name: pk as string,
+      mws: []
     });
     Reflect.defineMetadata('routes', routes, target.constructor);
   };
@@ -40,6 +41,7 @@ export const Post = (path: string): MethodDecorator => {
       method: 'post',
       path,
       name: pk as string,
+      mws: []
     });
     Reflect.defineMetadata('routes', routes, target.constructor);
   };
@@ -57,6 +59,7 @@ export const Delete = (path: string): MethodDecorator => {
       method: 'delete',
       path,
       name: pk as string,
+      mws: []
     });
     Reflect.defineMetadata('routes', routes, target.constructor);
   };
@@ -74,6 +77,7 @@ export const Options = (path: string): MethodDecorator => {
       method: 'options',
       path,
       name: pk as string,
+      mws: []
     });
     Reflect.defineMetadata('routes', routes, target.constructor);
   };
@@ -91,7 +95,21 @@ export const Put = (path: string): MethodDecorator => {
       method: 'put',
       path,
       name: pk as string,
+      mws: []
     });
     Reflect.defineMetadata('routes', routes, target.constructor);
   };
 };
+
+/** Middleware decorator */
+export const Middleware = (middleware: IExpressRoute['mws'][number]): MethodDecorator => {
+  return (target: any, pk: string | symbol): void => {
+    if (!Reflect.hasMetadata('routes', target.constructor)) {
+      Reflect.defineMetadata('routes', [], target.constructor);
+    }
+
+    const routes = Reflect.getMetadata('routes', target.constructor) as IExpressRoute[];
+    routes.find((r) => r.name === (pk as string))?.mws.push(middleware);
+    Reflect.defineMetadata('routes', routes, target.constructor);
+  }
+}
