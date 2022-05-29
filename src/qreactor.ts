@@ -62,14 +62,14 @@ export default class QReactor {
       const prefix = Reflect.getMetadata('prefix', controller);
       const routes: IExpressRoute[] = Reflect.getMetadata('routes', controller);
       routes.forEach((route) => {
-        console.log(
-          'Creating', 
-          route.method.toUpperCase(), 
-          'method',
-          route.mws.length > 0 ? 'with' : 'without',
-          'middlewares' + (route.mws.length > 0 ? ':' : ''),
-          route.mws.length > 0 ? route.mws.map((e) => e.name).join(', ') : ''
-        );
+        // console.log(
+        //   'Creating', 
+        //   route.method.toUpperCase(), 
+        //   'method',
+        //   route.mws.length > 0 ? 'with' : 'without',
+        //   'middlewares' + (route.mws.length > 0 ? ':' : ''),
+        //   route.mws.length > 0 ? route.mws.map((e) => e.name).join(', ') : ''
+        // );
 
         if (route.mws.length > 0)
           this.server[route.method](

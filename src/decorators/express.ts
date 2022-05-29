@@ -103,7 +103,6 @@ export const Put = (path: string): MethodDecorator => {
 
 /** Middleware decorator */
 export const Middleware = (middleware: IExpressRoute['mws'][number]): MethodDecorator => {
-  console.log('Defining middleware')
   return (target: any, pk: string | symbol): void => {
     if (!Reflect.hasMetadata('routes', target.constructor)) {
       Reflect.defineMetadata('routes', [], target.constructor);
