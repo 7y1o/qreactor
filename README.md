@@ -115,9 +115,16 @@ server.start();
 // controller.ts
 import {Controller, Post, Middleware} from '@7y1o/qreactor';
 
+const testMiddle = (req, res, next) => {
+    res.send('sent from middleware');
+    next();
+}
+
 @Controller()
 class IdentityController {
 
+    // IMPORTANT! Write @Middleware over method decorator
+    @Middleware(testMiddle)
     @Post('/signin')
     signIn(req, res) {
         req.session.name = req.body.name;
