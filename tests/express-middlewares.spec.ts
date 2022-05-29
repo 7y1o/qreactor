@@ -3,17 +3,16 @@ import QReactor, { Controller, Get, Middleware } from '../src';
 import axios from 'axios';
 
 // Creating sample middleware that setup the 'test-cookie'
-const sampleMiddleWare = ({ session }: { session: Request['session'] & { counter: number } }, res: Response, next: NextFunction) => {
-    session.counter = 1;
-    session.save(() => next());
+const sampleMiddleWare = async (req: { body: Request['body'], session: Request['session'] & { counter: number } }, res: Response, next: NextFunction) => {
+    res.send('Gotcha!');
 }
 
 @Controller()
 // @ts-ignore
 class TestController {
 
-    @Get('/')
     @Middleware(sampleMiddleWare as unknown as (req: Request, res: Response, next: NextFunction) => any)
+    @Get('/')
     // @ts-ignore
     hwGet(_, res: Response) {
         res.send('<h1>Hello, World!</h1>');
@@ -51,8 +50,7 @@ describe('Test server middlewares', () => {
 
     test('Middleware worked successfully', (done) => {
         axios.get('http://localhost:4003/').then(r => {
-            const cookie = r?.headers?.['set-cookie']?.[0] ?? '';
-            expect(cookie.includes('test-cookie')).toBeTruthy();
+            expect(r.data).toBe('Gotcha!');
             done();
         });
     })
