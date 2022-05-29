@@ -63,8 +63,8 @@ export default class QReactor {
       const routes: IExpressRoute[] = Reflect.getMetadata('routes', controller);
       routes.forEach((route) => {
         // console.log(
-        //   'Creating', 
-        //   route.method.toUpperCase(), 
+        //   'Creating',
+        //   route.method.toUpperCase(),
         //   'method',
         //   route.mws.length > 0 ? 'with' : 'without',
         //   'middlewares' + (route.mws.length > 0 ? ':' : ''),
@@ -97,7 +97,7 @@ export default class QReactor {
     for (const p of this.prepars) {
       await p();
     }
-    
+
     this.running = this.server.listen(this.config.port, () => {
       if (cb) cb();
     });

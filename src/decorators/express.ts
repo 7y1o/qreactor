@@ -108,11 +108,11 @@ export const Middleware = (middleware: IExpressRoute['mws'][number]): MethodDeco
       Reflect.defineMetadata('routes', [], target.constructor);
     }
 
-    const routes = Reflect.getMetadata('routes', target.constructor) as IExpressRoute[];    
+    const routes = Reflect.getMetadata('routes', target.constructor) as IExpressRoute[];
     const i = routes.findIndex((r) => {
-      return r.name === (pk as string)
+      return r.name === (pk as string);
     });
-    
+
     if (i !== -1) routes[i].mws.push(middleware);
     Reflect.defineMetadata('routes', routes, target.constructor);
   };
