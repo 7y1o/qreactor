@@ -103,13 +103,18 @@ export const Put = (path: string): MethodDecorator => {
 
 /** Middleware decorator */
 export const Middleware = (middleware: IExpressRoute['mws'][number]): MethodDecorator => {
+  console.log('Defining middleware')
   return (target: any, pk: string | symbol): void => {
     if (!Reflect.hasMetadata('routes', target.constructor)) {
       Reflect.defineMetadata('routes', [], target.constructor);
     }
 
-    const routes = Reflect.getMetadata('routes', target.constructor) as IExpressRoute[];
-    routes.find((r) => r.name === (pk as string))?.mws.push(middleware);
+    const routes = Reflect.getMetadata('routes', target.constructor) as IExpressRoute[];    
+    const i = routes.findIndex((r) => {
+      return r.name === (pk as string)
+    });
+    
+    if (i !== -1) routes[i].mws.push(middleware);
     Reflect.defineMetadata('routes', routes, target.constructor);
   };
 };
