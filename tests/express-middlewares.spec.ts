@@ -11,11 +11,17 @@ const sampleMiddleWare = async (req: { body: Request['body'], session: Request['
 // @ts-ignore
 class TestController {
 
-    @Middleware(sampleMiddleWare as unknown as (req: Request, res: Response, next: NextFunction) => any)
     @Get('/')
     // @ts-ignore
     hwGet(_, res: Response) {
         res.send('<h1>Hello, World!</h1>');
+    }
+
+    @Middleware(sampleMiddleWare as unknown as (req: Request, res: Response, next: NextFunction) => any)
+    @Get('/mw')
+    // @ts-ignore
+    testMW(_, res: Response) {
+        res.send('ss')
     }
 }
 
@@ -49,7 +55,7 @@ describe('Test server middlewares', () => {
     });
 
     test('Middleware worked successfully', (done) => {
-        axios.get('http://localhost:4003/').then(r => {
+        axios.get('http://localhost:4003/mw').then(r => {
             expect(r.data).toBe('Gotcha!');
             done();
         });
