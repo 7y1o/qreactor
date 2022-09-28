@@ -2,7 +2,7 @@ import 'reflect-metadata';
 
 // Import classes and methods
 import QReactor from './qreactor';
-import { Controller, Get, Delete, Options, Post, Put } from './decorators/express';
+import { Controller, Get, Delete, Options, Post, Put, Middleware } from './decorators/express';
 import { QLController, QLResolve } from './decorators/ql';
 
 // Import types
@@ -19,6 +19,7 @@ export {
   Options,
   Post,
   Put,
+  Middleware,
   QLController,
   QLResolve,
   // Types
